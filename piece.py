@@ -37,14 +37,28 @@ class Piece(pygame.sprite.Sprite):
     # This class represents a piece, derived from the Sprite class in pygame
     # the pieces have type R, N, B, K, Q, P, uppercase if white and 
     # lowercase for black
+    def getX(self):
+        return self.x
+
+    def getY(self):
+        return self.y
 
     def updateRect(self, x, y):
-        self.rect = pygame.Rect((x-self.image.get_width()/2, y-self.image.get_height()/2), (self.image.get_width(),self.image.get_height()))
+        self.rect = pygame.Rect((x-self.image.get_width()/2, y-self.image.get_height()/2), 
+        (self.image.get_width(),self.image.get_height()))
 
+    # returns a boolean, True if the piece is white and False for black
+    def isWhite(piece):
+        return piece.type.isupper()
+    
+    def getType(piece):
+        return piece.type
 
-    def __init__(self, x,y, type):
+    def __init__(self, x, y, type):
         pygame.sprite.Sprite.__init__(self)
         self.type = type
+        self.x = x
+        self.y = y
 
         match type:
             case "P":
@@ -73,7 +87,4 @@ class Piece(pygame.sprite.Sprite):
                 self.image = BK
 
         self.rect = pygame.Rect(boardSqCenters[x]-self.image.get_width()/2, boardSqCenters[y]-self.image.get_height()/2, self.image.get_width(),self.image.get_height())
-
-    # returns a boolean, True if the piece is white and False for black
-    def isWhite(piece):
-        return piece.type.isupper()
+    
