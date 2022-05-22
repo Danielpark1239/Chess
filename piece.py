@@ -42,23 +42,67 @@ class Piece(pygame.sprite.Sprite):
 
     def getY(self):
         return self.y
+    
+    def updateCoords(self, x, y):
+        self.x = x
+        self.y = y
 
     def updateRect(self, x, y):
         self.rect = pygame.Rect((x-self.image.get_width()/2, y-self.image.get_height()/2), 
         (self.image.get_width(),self.image.get_height()))
 
-    # returns a boolean, True if the piece is white and False for black
-    def isWhite(piece):
-        return piece.type.isupper()
+    # returns the piece's color: "w" for white and "b" for black
+    def getColor(self):
+        if self.type.isupper():
+            return "w"
+        else:
+            return "b"
     
-    def getType(piece):
-        return piece.type
+    # return the piece's type
+    def getType(self):
+        return self.type
+
+    # returns True if the pawn can move two squares, False otherwise
+    def canPawnMoveTwo(self):
+        assert self.type == "P" or self.type == "p"
+        if self.pawnMovedTwo == False:
+            return True
+        else:
+            return False
+    
+    # returns True if the king-rook pair can castle, False otherwise
+    def castle(king, rook):
+        assert king.type == "K" or king.type == "k"
+        assert rook.type == "R" or rook.type == "r"
+        return (king.canCastle and rook.canCastle)
+    
+    def isInCheck(self):
+        return self.inCheck
 
     def __init__(self, x, y, type):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__(self)
         self.type = type
         self.x = x
         self.y = y
+
+        # keeps track of if a pawn has moved two squares
+        if type == "P" or type == "p":
+            self.pawnMovedTwo = False
+        else:
+            self.pawnMovedTwo = None
+
+        # keeps track of if the piece can castle
+        if (type == "K" or type == "k") or (type == "R" or type == "r"):
+            self.canCastle = True
+        else:
+            self.canCastle = None
+
+        # keeps track of if the king is in check
+        if type == "K" or type == "k":
+            self.inCheck = False
+        else:
+            self.inCheck = None
+        
 
         match type:
             case "P":
@@ -86,5 +130,7 @@ class Piece(pygame.sprite.Sprite):
             case "k":
                 self.image = BK
 
-        self.rect = pygame.Rect(boardSqCenters[x]-self.image.get_width()/2, boardSqCenters[y]-self.image.get_height()/2, self.image.get_width(),self.image.get_height())
+        self.rect = pygame.Rect(boardSqCenters[x]-self.image.get_width()/2,
+        boardSqCenters[y]-self.image.get_height()/2, self.image.get_width(),
+        self.image.get_height())
     

@@ -2,10 +2,8 @@ from re import S
 from piece import Piece
 
 class FENreader:
-    # a list of pieces currently on the board
-    # invariant: pieces are always listed in order according
-    # to FEN string guidelines
-    def getPieces(self) -> list:
+    # returns a list of pieces parsed from the FEN string
+    def getFENPieces(self) -> list:
         return self.pieces
     
     # keeps track of player turns; can be "w"(white) or "b"(black), 

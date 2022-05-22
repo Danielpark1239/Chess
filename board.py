@@ -1,7 +1,6 @@
 from pydoc import importfile
 from piece import Piece
 from FENreader import FENreader
-from moves import moves
 
 # inherited from FENreader class
 # see FENreader.py for instance variables and methods
@@ -15,6 +14,8 @@ class Board(FENreader):
     #    if moves.validateMove(xFrom, yFrom, xDest, yDest) == True:
     #        # update piece locations and board state
     #        continue
+
+    # prints out the current board state
     def __str__(self):
         string = ""
         for j in range(8):
@@ -25,6 +26,17 @@ class Board(FENreader):
                     string += "[ ]"
             string += ("\n")
         return string
+    
+    # Returns a list of all the pieces on the board
+    def getPieces(self):
+        pieces = []
+        for i in range(8):
+            for j in range(8):
+                if self.squares[i][j] != " ":
+                    pieces.append(self.squares[i][j])
+        return pieces
+
+    
 
     def __init__(self, FENstring):
         FENreader.__init__(self, FENstring)
@@ -39,4 +51,8 @@ class Board(FENreader):
 
     # if the move is legal, move the piece to the destination square.
     # def move(self, piece, destSquare):
+
+
+
+    
 
