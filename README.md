@@ -1,2 +1,2 @@
 # Chess
-Chess game built using Python3
+Chess game built using Python, Pygame, and Stockfish
