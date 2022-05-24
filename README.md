@@ -1,3 +1,3 @@
 # Chess
 Imcomplete Chess game built using Python, Pygame;
-see Chess v2 for an updated version
+see Chess_v2 for an updated version
